@@ -271,14 +271,18 @@ namespace LocalizedAppTitleNamespace
 					if( LocalizeAppNameOnAndroid )
 					{
 						// Generate strings.xml files for localized app names
-						string localizedStringsPath = ( i == DefaultLocalizedData ) ? "res/values/strings.xml" : ( "res/values-" + languageCode + "/strings.xml" );
+						
 						string localizedStringsContents =
 							"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
 							"<resources>\n" +
 							"    <string name=\"" + AndroidNameResource + "\">" + LocalizedData[i].AppName + "</string>\n" +
 							"</resources>";
 
-						zip.AddTextFile( ZipStorer.Compression.Deflate, localizedStringsPath, localizedStringsContents, System.DateTime.Now, "" );
+						if( i == DefaultLocalizedData){
+							zip.AddTextFile( ZipStorer.Compression.Deflate, "res/values/strings.xml", localizedStringsContents, System.DateTime.Now, "" );
+						}
+
+						zip.AddTextFile( ZipStorer.Compression.Deflate, "res/values-" + languageCode + "/strings.xml", localizedStringsContents, System.DateTime.Now, "" );
 					}
 
 					if( LocalizeAppIconOnAndroid )
